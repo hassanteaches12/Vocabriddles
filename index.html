@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Class 5 — Vocabulary Riddle Quiz</title>
+<style>
+  :root{
+    --paper:#fffaf2;
+    --ink:#122028;
+    --muted:#6c6f70;
+    --accent:#0b6b8a;
+    --warm:#b35f18;
+    --card-shadow: 0 14px 40px rgba(12,18,20,0.06);
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    background: linear-gradient(180deg,#eaf6ff 0%, #fbf8f3 50%);
+    color:var(--ink);
+    padding:18px;
+  }
+  .wrap{max-width:980px;margin:12px auto;padding:20px;background:linear-gradient(180deg,var(--paper),#ffffff);border-radius:14px;box-shadow:var(--card-shadow);border:1px solid rgba(6,10,12,0.04)}
+  header{display:flex;gap:14px;align-items:center}
+  .logo{width:76px;height:76px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff7ea);display:flex;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,0.03)}
+  h1{margin:0;font-size:20px}
+  p.lead{margin:6px 0 0 0;color:var(--muted)}
+  .card{background:linear-gradient(180deg,#fff,#fffef8);padding:16px;border-radius:12px;margin-top:14px;border:1px solid rgba(0,0,0,0.03)}
+  .info-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+  .info-box{flex:1 1 200px;min-width:140px}
+  label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink)}
+  input[type="text"]{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(8,12,14,0.06);background:#fff;font-size:15px}
+  .small{font-size:13px;color:var(--muted);margin-top:6px}
+  .riddle-card{border-radius:12px;padding:18px;background:#fff;margin-top:16px;border:1px solid rgba(0,0,0,0.03);box-shadow:0 6px 18px rgba(8,12,14,0.03)}
+  .riddle-num{font-weight:900;color:var(--accent);font-size:13px}
+  .riddle-text{font-size:18px;font-weight:800;margin-top:6px}
+  .riddle-def{color:var(--muted);margin-top:8px}
+  .answer-row{display:flex;gap:10px;align-items:center;margin-top:12px}
+  input.answer{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);font-size:16px}
+  button.btn{background:linear-gradient(90deg,#0f6c87,#0a4c60);color:white;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:800}
+  button.btn.secondary{background:#fff;border:1px solid rgba(0,0,0,0.06);color:var(--ink);font-weight:700}
+  .feedback{margin-top:12px;padding:12px;border-radius:10px;background:#fff8eb;border:1px solid rgba(179,95,24,0.12)}
+  .feedback.correct{background:#e8f9f9;border-color:rgba(11,107,138,0.10)}
+  .feedback .status{font-weight:900;font-size:15px}
+  .explain{margin-top:8px;color:var(--muted)}
+  .progress{margin-top:12px;height:12px;background:#f1f1f1;border-radius:8px;overflow:hidden}
+  .progress > .bar{height:100%;background:linear-gradient(90deg,var(--accent),#0a6a6a);width:0%}
+  .meta-row{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+  .score{margin-left:auto;font-weight:900;color:var(--warm)}
+  .hidden{display:none}
+  footer{margin-top:14px;text-align:center;color:var(--muted);font-size:13px}
+  @media (max-width:720px){
+    .info-row{flex-direction:column}
+    .score{margin-left:0}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap" role="main" aria-labelledby="title">
+    <header>
+      <div class="logo" aria-hidden="true">
+        <svg width="52" height="52" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="3" y="6" width="58" height="44" rx="8" fill="#fff7ea" stroke="#ead7bb" />
+          <path d="M10 36c10 6 30 6 44 0" stroke="#c77a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M24 18 L32 10 L40 18" stroke="#0b6b8a" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h1 id="title">Class 5 — Vocabulary Riddle Quiz</h1>
+        <p class="lead">Topic: Guess the Word Meaning (From 'The Message of Forgiveness' to 'Everyone Sang'). One riddle at a time — submit to check and then move to the next.</p>
+      </div>
+    </header>
+
+    <!-- student info -->
+    <section class="card" aria-labelledby="studentinfo">
+      <h2 id="studentinfo" style="margin:0;font-size:16px">Student Information</h2>
+      <div class="small" style="margin-top:6px">Fill these before starting (used for the end report).</div>
+
+      <div class="info-row" style="margin-top:12px">
+        <div class="info-box">
+          <label for="st-name">Full name</label>
+          <input type="text" id="st-name" aria-required="true" />
+        </div>
+        <div class="info-box">
+          <label for="st-class">Class</label>
+          <input type="text" id="st-class" aria-required="true" />
+        </div>
+        <div class="info-box">
+          <label for="st-section">Section</label>
+          <input type="text" id="st-section" aria-required="true" />
+        </div>
+        <div class="info-box">
+          <label for="st-roll">Roll number</label>
+          <input type="text" id="st-roll" aria-required="true" />
+        </div>
+      </div>
+
+      <div class="note">Tip: Encourage students to type one word/phrase answers (no punctuation required). Minor typos are tolerated.</div>
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+        <button class="btn" id="startBtn" onclick="startQuiz()">Start Quiz</button>
+        <button class="btn secondary" onclick="resetAll()">Reset / Clear</button>
+      </div>
+    </section>
+
+    <!-- quiz area -->
+    <section id="quizArea" class="card hidden" aria-labelledby="riddleheading">
+      <h2 id="riddleheading" style="margin:0;font-size:16px">Riddle</h2>
+      <div id="riddleContainer" class="riddle-card" role="region" aria-live="polite">
+        <div class="riddle-num" id="riddleNum">Riddle 1 of 88</div>
+        <div class="riddle-text" id="riddleText">...</div>
+        <div class="riddle-def" id="riddleDef">...</div>
+
+        <div class="answer-row">
+          <input type="text" id="answerInput" class="answer" placeholder="Type your answer here" autocomplete="off" />
+          <button class="btn" id="submitAnswerBtn" onclick="submitAnswer()">Submit</button>
+          <button class="btn secondary hidden" id="nextBtn" onclick="nextRiddle()">Next</button>
+        </div>
+
+        <div id="feedback" class="feedback hidden" role="status" aria-live="assertive">
+          <div class="status" id="statusText">Status</div>
+          <div class="explain" id="explainText"></div>
+          <div class="small" id="teacherHint"></div>
+        </div>
+
+        <div class="meta-row">
+          <div style="width:220px"><strong>Progress</strong>
+            <div class="progress" aria-hidden="true" style="margin-top:8px"><div class="bar" id="progressBar"></div></div>
+          </div>
+          <div class="small">Correct: <span id="correctCount">0</span> / <span id="currentIndex">0</span></div>
+          <div class="score" id="liveScore">Score: 0</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- final summary -->
+    <section id="summary" class="card hidden" aria-labelledby="summaryheading">
+      <h2 id="summaryheading" style="margin:0;font-size:16px">Quiz Summary</h2>
+      <div style="margin-top:10px">
+        <div><strong>Student:</strong> <span id="outName"></span> — Class <span id="outClass"></span> Section <span id="outSection"></span> Roll <span id="outRoll"></span></div>
+        <div style="margin-top:8px"><strong>Score:</strong> <span id="finalScore"></span> / <span id="totalQ"></span> (<span id="finalPercent"></span>%)</div>
+        <div style="margin-top:8px" id="finalMessage"></div>
+        <div style="margin-top:12px">
+          <button class="btn" onclick="downloadResults()">Download Report (Open print dialog)</button>
+          <button class="btn secondary" onclick="location.reload()">Start Again</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <small>Designed for classroom use — teacher should review long answers before recording final marks.</small>
+    </footer>
+  </div>
+
+<script>
+/* ====== Utility: normalize & levenshtein fuzzy matcher ====== */
+function normalize(s){ return String(s||'').trim().toLowerCase().replace(/[^a-z0-9\s']/g,''); }
+
+// Levenshtein distance
+function levenshtein(a,b){
+  a = String(a||''); b = String(b||'');
+  if(a===b) return 0;
+  const m=a.length, n=b.length;
+  if(m===0) return n;
+  if(n===0) return m;
+  const d = Array(m+1).fill(0).map((_,i)=>i);
+  for(let j=1;j<=n;j++){
+    let prev = d[0];
+    d[0] = j;
+    for(let i=1;i<=m;i++){
+      let cur = d[i];
+      const cost = a[i-1] === b[j-1] ? 0 : 1;
+      d[i] = Math.min(d[i]+1, d[i-1]+1, prev + cost);
+      prev = cur;
+    }
+  }
+  return d[m];
+}
+
+// fuzzy equals: allow substring match OR small edit distance
+const MAX_LEVENSHTEIN = 2; // adjust sensitivity
+function fuzzyEquals(ans, target){
+  if(!ans || !target) return false;
+  ans = normalize(ans);
+  target = normalize(target);
+  if(ans === target) return true;
+  if(ans.includes(target) || target.includes(ans)) return true;
+  // accept when distance small and lengths comparable
+  const dist = levenshtein(ans, target);
+  if(dist <= MAX_LEVENSHTEIN) return true;
+  return false;
+}
+
+/* ====== Riddle bank (88 entries) ======
+ Each item: riddle, definition (display), answer (canonical), explanation (short)
+*/
+const RIDDLES = [
+  /* 1 */ {r: "I am a particular quality in your personality. What am I?", d:"A particular quality in your personality.", a:"trait", e:"A 'trait' is a distinguishing quality or characteristic of a person."},
+  /* 2 */ {r: "I am the ability to sense, imagine, and share another person’s feelings. What am I?", d:"Ability to sense, imagine, and share another person’s feelings.", a:"empathy", e:"'Empathy' means understanding and sharing another person's feelings."},
+  /* 3 */ {r: "I mean being ready to forgive and be kind to others. What am I?", d:"Ready to forgive and be kind to others.", a:"merciful", e:"'Merciful' describes someone ready to forgive and show kindness instead of punishment."},
+  /* 4 */ {r: "I am the action of giving a religious talk in a public place. What am I?", d:"To give a religious talk in a public place.", a:"preach", e:"'Preach' means to deliver a religious or moral speech to an audience."},
+  /* 5 */ {r: "I am a synonym for 'good' or 'gentle'. What am I?", d:"Good / gentle.", a:"noble", e:"'Noble' can mean morally good or having honorable qualities."},
+  /* 6 */ {r: "I mean to have or own something. What am I?", d:"Own.", a:"possess", e:"'Possess' means to have or own something."},
+  /* 7 */ {r: "I am a synonym for 'act', describing how you conduct yourself. What am I?", d:"Act.", a:"behave", e:"'Behave' describes the way someone acts or conducts themselves."},
+  /* 8 */ {r: "I am a synonym for 'many' or a large quantity. What am I?", d:"Many.", a:"numerous", e:"'Numerous' means many or a large number."},
+  /* 9 */ {r: "I am a person with special knowledge, skill, or training in something. Who am I?", d:"A person with special knowledge, skill, or training in something.", a:"expert", e:"An 'expert' has special skill or knowledge in a particular area."},
+  /*10 */ {r: "I describe something swelling outwards or sticking out. What am I?", d:"Swelling outwards; sticking out.", a:"bulging", e:"'Bulging' means sticking out because of swelling or pressure."},
+  /*11 */ {r: "I am small pieces of coloured paper traditionally thrown on birthdays and marriage ceremonies. What am I?", d:"Small pieces of coloured paper.", a:"confetti", e:"'Confetti' are small pieces of coloured paper thrown to celebrate."},
+  /*12 */ {r: "I mean being slow or wasting time. What am I?", d:"Being slow.", a:"dawdling", e:"'Dawdling' means moving or doing something slowly, wasting time."},
+  /*13 */ {r: "I am a brother or sister. Who am I?", d:"A brother or sister.", a:"sibling", e:"A 'sibling' is a brother or sister."},
+  /*14 */ {r: "I mean limitless or impossible to measure. What am I?", d:"Limitless; impossible to measure.", a:"infinite", e:"'Infinite' means without limits or end."},
+  /*15 */ {r: "I describe something that is extremely detailed and complicated. What am I?", d:"Extremely detailed and complicated.", a:"intricate", e:"'Intricate' describes something with many small, complex parts."},
+  /*16 */ {r: "I mean unaware or not noticing what is happening. What am I?", d:"Unaware.", a:"oblivious", e:"'Oblivious' means not aware of or not noticing what is happening."},
+  /*17 */ {r: "I am an extreme fear of something. What am I?", d:"An extreme fear of something.", a:"phobia", e:"A 'phobia' is an extreme or irrational fear of something."},
+  /*18 */ {r: "I am an animal that hunts and kills another for food. Who am I?", d:"An animal that hunts and kills another for food.", a:"predator", e:"A 'predator' hunts and eats other animals."},
+  /*19 */ {r: "I mean something that was rejected or stopped. What am I?", d:"Rejected or stopped.", a:"quashed", e:"'Quashed' means suppressed, stopped, or rejected."},
+  /*20 */ {r: "I describe moving or reacting with great speed. What am I?", d:"Moving or reacting with great speed.", a:"rapidity", e:"'Rapidity' means great speed or quickness."},
+  /*21 */ {r: "I describe doing something with hesitation or unwillingly. What am I?", d:"With hesitation; unwillingly.", a:"reluctantly", e:"'Reluctantly' means doing something with hesitation or unwillingness."},
+  /*22 */ {r: "I mean belonging to a period of history that is thousands of years in the past. What am I?", d:"Belonging to a period of history that is thousands of years in the past.", a:"ancient", e:"'Ancient' describes something from a very long time ago."},
+  /*23 */ {r: "I describe something that is large and plump. What am I?", d:"Large and plump.", a:"rotund", e:"'Rotund' means round and plump in shape."},
+  /*24 */ {r: "I am a verb meaning ran with quick, hasty steps. What am I?", d:"Ran with quick, hasty steps.", a:"scuttled", e:"'Scuttled' means ran with quick, short steps."},
+  /*25 */ {r: "I mean doing something secretly or stealthily. What am I?", d:"Secretly or stealthily.", a:"surreptitiously", e:"'Surreptitiously' means done secretly or stealthily."},
+  /*26 */ {r: "I mean being delighted or held spellbound. What am I?", d:"Delighted or held spellbound.", a:"enraptured", e:"'Enraptured' means held spellbound or filled with delight."},
+  /*27 */ {r: "We are the people who live in a particular place. Who are we?", d:"People who live in a particular place.", a:"inhabitants", e:"'Inhabitants' are the people who live in a place."},
+  /*28 */ {r: "I mean funny or causing laughter. What am I?", d:"Funny.", a:"amusing", e:"'Amusing' means causing laughter or entertaining."},
+  /*29 */ {r: "I am a deep-throated, lengthy bark from a dog. What am I?", d:"Deep-throated, lengthy bark.", a:"bay", e:"A 'bay' is a deep, prolonged bark, often from dogs."},
+  /*30 */ {r: "I am a warning that something is dangerous. What am I?", d:"A warning that something is dangerous.", a:"beware", e:"'Beware' is a warning to be careful or cautious."},
+  /*31 */ {r: "I mean gave out or sent forth (like light or sound). What am I?", d:"Gave out (light or sound).", a:"emitted", e:"'Emitted' means sent out or given off (light, sound, etc.)."},
+  /*32 */ {r: "I describe being greatly excited or frenzied. What am I?", d:"Greatly excited; frenzied.", a:"frantic", e:"'Frantic' means very excited, worried, or in a hurried panic."},
+  /*33 */ {r: "I mean touched or handled awkwardly and uncertainly. What am I?", d:"Touched or handled awkwardly and uncertainly.", a:"fumbled", e:"'Fumbled' means handled something clumsily or awkwardly."},
+  /*34 */ {r: "I am the possibility that something bad might happen in the future. What am I?", d:"The possibility that something bad might happen in the future.", a:"risk", e:"A 'risk' is the chance that something bad or harmful might happen."},
+  /*35 */ {r: "I am a chain or strap attached to the collar of a dog. What am I?", d:"A chain or strap attached to the collar of a dog.", a:"leash", e:"A 'leash' is a strap or chain used to control a dog."},
+  /*36 */ {r: "I am a verb meaning to consider something deeply or thoughtfully. What am I?", d:"To consider thoughtfully.", a:"muse", e:"To 'muse' means to think about something deeply and carefully."},
+  /*37 */ {r: "I am an animal that is hunted by another. What am I?", d:"An animal that is hunted by another.", a:"prey", e:"'Prey' is an animal hunted and eaten by a predator."},
+  /*38 */ {r: "I mean to go with light, running steps. What am I?", d:"To go with light, running steps.", a:"scurry", e:"To 'scurry' means to move quickly with short light steps."},
+  /*39 */ {r: "I am a way of walking without lifting your feet off the ground. What am I?", d:"To walk without lifting your feet off the ground.", a:"shuffle", e:"To 'shuffle' means to walk slowly without lifting the feet much."},
+  /*40 */ {r: "I am what you did if you twisted and turned your body. What am I?", d:"Twisted and turned.", a:"writhed", e:"'Writhed' means twisted or contorted, usually from pain or discomfort."},
+  /*41 */ {r: "I am a harsh, unpleasant, and loud mixture of sounds. What am I?", d:"A harsh, unpleasant, or loud mixture of sounds.", a:"cacophony", e:"'Cacophony' refers to a loud, discordant mixture of sounds."},
+  /*42 */ {r: "I describe someone or something that is fierce, violent, or frightening. What am I?", d:"Fierce, violent, or frightening.", a:"ferocious", e:"'Ferocious' means fierce, violent, or savage."},
+  /*43 */ {r: "I include bullets, shells, missiles, and other things used as weapons. What am I?", d:"Bullets, shells, missiles, and other things used as weapons.", a:"ammunition", e:"'Ammunition' refers to bullets, shells, or other projectiles used in weapons."},
+  /*44 */ {r: "I am a route or way taken during a journey. What am I?", d:"Route; way.", a:"course", e:"A 'course' is the route or path taken during a journey."},
+  /*45 */ {r: "I mean huge, very large, or very tall. What am I?", d:"Huge; very large or tall.", a:"gigantic", e:"'Gigantic' means extremely large or huge."},
+  /*46 */ {r: "I am a severe tropical storm or windstorm (often over the ocean). What am I?", d:"A severe storm.", a:"hurricane", e:"A 'hurricane' is a powerful tropical storm with strong winds and rain."},
+  /*47 */ {r: "I am a vertical pole that supports the sails on a ship. What am I?", d:"A vertical pole that supports the sails on a ship.", a:"mast", e:"A 'mast' is the tall vertical pole on a ship that holds the sails."},
+  /*48 */ {r: "I mean going over the side of a ship and into the water. What is the action?", d:"Over the side of a ship and into the water.", a:"overboard", e:"'Overboard' means going from the ship into the water."},
+  /*49 */ {r: "I mean set on a particular course of action or decided firmly (synonym for 'solved'). What am I?", d:"Set on a particular course of action; decided.", a:"resolved", e:"'Resolved' means decided firmly or set to a course of action."},
+  /*50 */ {r: "I am a tall fence or enclosure, usually made of wooden posts, to keep out enemies. What am I?", d:"A tall fence or enclosure made of wooden posts, to keep out enemies.", a:"stockade", e:"A 'stockade' is a defensive fence made of posts to keep enemies out."},
+  /*51 */ {r: "I am a destructive, funnel-shaped column of air or a violent windstorm. What am I?", d:"A destructive, funnel-shaped rotating column of air; a windstorm.", a:"tornado", e:"A 'tornado' is a violent rotating column of air touching the ground."},
+  /*52 */ {r: "I am a formal word for a ship. What am I?", d:"A ship.", a:"vessel", e:"'Vessel' is a formal word meaning ship or large boat."},
+  /*53 */ {r: "I describe using physical force to cause hurt or damage. What am I?", d:"Using physical force to cause hurt or damage.", a:"violent", e:"'Violent' means using force to hurt or damage."},
+  /*54 */ {r: "I am a long journey, often by sea or air, to a distant place. What am I?", d:"A journey by sea or air, especially one to a distant place.", a:"voyage", e:"A 'voyage' is a long journey, usually by sea or air."},
+  /*55 */ {r: "I am a piece of land that is completely surrounded by water. What am I?", d:"A piece of land that is completely surrounded by water.", a:"island", e:"An 'island' is land completely surrounded by water."},
+  /*56 */ {r: "I am the scientific study and examination of ancient cultures and objects dug from the ground. What is my name?", d:"The scientific study of ancient cultures through the examination of buildings, graves, tools, and other things dug up from the ground.", a:"archaeology", e:"'Archaeology' studies ancient cultures by digging up and examining remains."},
+  /*57 */ {r: "I am somebody who has a scientific interest in plants. Who am I?", d:"Somebody with a scientific interest in plants.", a:"botanist", e:"A 'botanist' is a scientist who studies plants."},
+  /*58 */ {r: "I am a piece of furniture with shelves or compartments used for storing or displaying objects. What am I?", d:"An upright piece of furniture consisting of drawers, shelves, and compartments for storing or displaying objects.", a:"cabinet", e:"A 'cabinet' is a piece of furniture used for storing or displaying items."},
+  /*59 */ {r: "I mean keeping something protected and storing it very carefully. What am I?", d:"Keeping something protected, storing carefully.", a:"preserving", e:"'Preserving' means keeping something safe and preventing damage or decay."},
+  /*60 */ {r: "I mean relating to one specific thing, not general or common. What am I?", d:"Relating to one specific thing.", a:"particular", e:"'Particular' refers to something specific or special, not general."},
+  /*61 */ {r: "I am something you do regularly just for fun, like a hobby. What am I?", d:"Something done regularly for enjoyment.", a:"pastime", e:"A 'pastime' is an activity done regularly for enjoyment or leisure."},
+  /*62 */ {r: "I describe having an effect on someone or causing them to change their mind. What am I?", d:"Having an effect on someone or something.", a:"influenced", e:"'Influenced' means having an effect on someone's thoughts or actions."},
+  /*63 */ {r: "I mean ready to be used or easy to get. What am I?", d:"Ready to be used or easy to get.", a:"available", e:"'Available' means ready for use or easy to obtain."},
+  /*64 */ {r: "I am something that has been gotten or acquired, often through effort. What am I?", d:"Acquired or gained.", a:"obtained", e:"'Obtained' means got or acquired, often after effort."},
+  /*65 */ {r: "I am a verb meaning relies on or needs something else. What am I?", d:"Relies on or needs something else.", a:"depends", e:"'Depends' means to rely on or be influenced by something else."},
+  /*66 */ {r: "I am a special, large, formal meal for many people. What am I?", d:"A special meal for lots of people.", a:"banquet", e:"A 'banquet' is a large formal meal for many guests."},
+  /*67 */ {r: "I am a group of stars forming a recognized pattern in the sky. What am I?", d:"A group of stars forming a recognizable pattern.", a:"constellation", e:"A 'constellation' is a pattern of stars named and recognized in the sky."},
+  /*68 */ {r: "I am the skill of being clever or using trickery to get something. What am I?", d:"Skill in using trickery to get something.", a:"cunning", e:"'Cunning' means skillful in achieving aims by clever or sometimes deceitful means."},
+  /*69 */ {r: "I am the loss of respect or reputation (Antonym of 'honour'). What am I?", d:"Loss of respect.", a:"disgrace", e:"'Disgrace' means loss of reputation or respect due to wrongdoing or failure."},
+  /*70 */ {r: "I am a young, beautiful mythological spirit associated with nature. Who am I?", d:"A young and beautiful mythological spirit of nature.", a:"nymph", e:"A 'nymph' is a mythical spirit often associated with nature and beauty."},
+  /*71 */ {r: "I am a cruel, oppressive ruler who abuses power. Who am I?", d:"A cruel and oppressive ruler.", a:"tyrant", e:"A 'tyrant' is a ruler who uses power cruelly and unjustly."},
+  /*72 */ {r: "I mean having a desire to cause physical or mental pain or make somebody suffer. What am I?", d:"Having a desire to cause physical or mental pain and make somebody suffer.", a:"cruel", e:"'Cruel' means wanting to cause pain or suffering to others."},
+  /*73 */ {r: "I am a person who is admired by many for doing something brave or good. Who am I?", d:"A person who is admired by many people for doing something brave or good.", a:"hero", e:"A 'hero' is admired for bravery or noble deeds."},
+  /*74 */ {r: "I describe someone who is extremely disappointed or disheartened (Antonym of 'cheerful'). What am I?", d:"Very disappointed or disheartened.", a:"crestfallen", e:"'Crestfallen' means very disappointed or sad."},
+  /*75 */ {r: "I am an action: to be distressed or provide a source of comfort to somebody who is distressed. What am I?", d:"To be distressed or provide a source of comfort to somebody who is distressed.", a:"console", e:"To 'console' someone means to comfort them when they are upset."},
+  /*76 */ {r: "I am a small closed space connected to the kitchen where food may be stored. What am I?", d:"A small closed space connected to the kitchen in which food may be stored.", a:"pantry", e:"A 'pantry' is a small room or cupboard where food is stored."},
+  /*77 */ {r: "I am an idiom meaning ate food eagerly and quickly. What am I?", d:"Ate hungrily.", a:"tucked into", e:"To 'tuck into' food means to eat eagerly and heartily."},
+  /*78 */ {r: "I describe something that happens slowly, little by little, or in small degrees. What am I?", d:"Slowly, little by little, or in small degrees.", a:"gradually", e:"'Gradually' means happening slowly over time."},
+  /*79 */ {r: "I describe how someone stared if they showed no emotion or understanding. What am I?", d:"Showed no emotion or understanding.", a:"looked blankly", e:"To 'look blankly' means to stare without expression or understanding."},
+  /*80 */ {r: "I mean to move lightly in the air or remain near a place. What am I?", d:"To move lightly in the air or remain near a place.", a:"hover", e:"To 'hover' means to stay in one place in the air or linger nearby."},
+  /*81 */ {r: "I mean formally called for someone to appear or come quickly. What am I?", d:"Formally called for someone to appear or come quickly.", a:"summoned", e:"'Summoned' means officially called someone to appear or come."},
+  /*82 */ {r: "I am a state of great disorder, mess, or confusion. What am I?", d:"Great disorder, mess, or confusion.", a:"shambles", e:"A 'shambles' is a state of great disorder or confusion."},
+  /*83 */ {r: "I describe looking quickly and anxiously because you are worried. What am I?", d:"Looking quickly and anxiously.", a:"glancing nervously", e:"'Glancing nervously' means looking quickly around with worry or anxiety."},
+  /*84 */ {r: "I describe something, like a feeling or song, that has no actual speech. What am I?", d:"No actual speech.", a:"wordless", e:"'Wordless' means without words or speech."},
+  /*85 */ {r: "I am the past tense of a verb meaning raised or moved to a higher level. What am I?", d:"Raised or moved to a higher level.", a:"lifted", e:"'Lifted' means raised or moved to a higher position or level."},
+  /*86 */ {r: "I mean something that happens very fast, without any warning. What am I?", d:"Very fast, without any warning.", a:"suddenly", e:"'Suddenly' means happening quickly and without warning."},
+  /*87 */ {r: "I am the state of being able to act, speak, or move without limits. What am I?", d:"Able to act, speak, or move without limits.", a:"freedom", e:"'Freedom' is the state of being free from restrictions or control."},
+  /*88 */ {r: "I am a feeling of great joy or extreme happiness. What am I?", d:"Great joy or extreme happiness.", a:"delight", e:"'Delight' means great pleasure, joy, or happiness."}
+]; // end RIDDLES
+
+/* Quiz state */
+let index = 0;
+let correctCount = 0;
+let total = RIDDLES.length;
+let started = false;
+const results = []; // store student answers & correctness
+
+/* DOM refs */
+const quizArea = document.getElementById('quizArea');
+const riddleNum = document.getElementById('riddleNum');
+const riddleText = document.getElementById('riddleText');
+const riddleDef = document.getElementById('riddleDef');
+const answerInput = document.getElementById('answerInput');
+const submitBtn = document.getElementById('submitAnswerBtn');
+const nextBtn = document.getElementById('nextBtn');
+const feedback = document.getElementById('feedback');
+const statusText = document.getElementById('statusText');
+const explainText = document.getElementById('explainText');
+const teacherHint = document.getElementById('teacherHint');
+const progressBar = document.getElementById('progressBar');
+const correctCountEl = document.getElementById('correctCount');
+const currentIndexEl = document.getElementById('currentIndex');
+const liveScoreEl = document.getElementById('liveScore');
+const summary = document.getElementById('summary');
+
+function startQuiz(){
+  const name = document.getElementById('st-name').value.trim();
+  const cls = document.getElementById('st-class').value.trim();
+  const sec = document.getElementById('st-section').value.trim();
+  const roll = document.getElementById('st-roll').value.trim();
+  if(!name || !cls || !sec || !roll){
+    alert('Fill Name, Class, Section and Roll first.');
+    return;
+  }
+  // reset
+  index = 0; correctCount = 0; results.length = 0;
+  started = true;
+  document.getElementById('startBtn').disabled = true;
+  quizArea.classList.remove('hidden');
+  summary.classList.add('hidden');
+  renderRiddle();
+}
+
+/* render current riddle */
+function renderRiddle(){
+  const item = RIDDLES[index];
+  riddleNum.textContent = `Riddle ${index+1} of ${total}`;
+  riddleText.textContent = item.r;
+  riddleDef.textContent = item.d;
+  answerInput.value = '';
+  answerInput.focus();
+  feedback.classList.add('hidden');
+  nextBtn.classList.add('hidden');
+  submitBtn.classList.remove('hidden');
+  updateMeta();
+}
+
+/* update progress and score display */
+function updateMeta(){
+  progressBar.style.width = `${Math.round((index/total)*100)}%`;
+  correctCountEl.textContent = correctCount;
+  currentIndexEl.textContent = index+1;
+  liveScoreEl.textContent = `Score: ${correctCount}`;
+}
+
+/* submission logic */
+function submitAnswer(){
+  if(!started) return;
+  const raw = answerInput.value.trim();
+  if(!raw){
+    alert('Please type an answer then Submit.');
+    return;
+  }
+  const item = RIDDLES[index];
+  const student = raw;
+  const canonical = item.a;
+  let isCorrect = false;
+
+  // comparison: allow synonyms and small fuzzy typos
+  if(Array.isArray(canonical)){
+    for(const alt of canonical){ if(fuzzyEquals(student, alt)) { isCorrect = true; break; } }
+  } else {
+    if(fuzzyEquals(student, canonical)) isCorrect = true;
+  }
+
+  // record
+  results[index] = {student, correct: item.a, isCorrect, explanation: item.e};
+
+  // show feedback block
+  feedback.classList.remove('hidden');
+  if(isCorrect){
+    feedback.classList.add('correct');
+    statusText.textContent = "✅ Correct!";
+    explainText.textContent = `Answer: ${item.a} — ${item.e}`;
+    teacherHint.textContent = "Good work. Click Next to continue.";
+    correctCount++;
+  } else {
+    feedback.classList.remove('correct');
+    statusText.textContent = "❌ Incorrect";
+    explainText.textContent = `Correct answer: ${item.a} — ${item.e}`;
+    teacherHint.textContent = "Read the explanation, then click Next. Try to remember this meaning.";
+  }
+
+  submitBtn.classList.add('hidden');
+  nextBtn.classList.remove('hidden');
+  updateMeta();
+
+  // if last riddle, change Next to Finish
+  if(index === total - 1){
+    nextBtn.textContent = 'Finish';
+  } else {
+    nextBtn.textContent = 'Next';
+  }
+}
+
+/* goto next riddle or finish */
+function nextRiddle(){
+  if(index < total - 1){
+    index++;
+    renderRiddle();
+  } else {
+    finishQuiz();
+  }
+}
+
+/* finish and show summary */
+function finishQuiz(){
+  quizArea.classList.add('hidden');
+  summary.classList.remove('hidden');
+  document.getElementById('outName').textContent = document.getElementById('st-name').value;
+  document.getElementById('outClass').textContent = document.getElementById('st-class').value;
+  document.getElementById('outSection').textContent = document.getElementById('st-section').value;
+  document.getElementById('outRoll').textContent = document.getElementById('st-roll').value;
+  document.getElementById('finalScore').textContent = correctCount;
+  document.getElementById('totalQ').textContent = total;
+  const percent = Math.round((correctCount/total)*100);
+  document.getElementById('finalPercent').textContent = percent;
+  const msg = percent >= 80 ? "Excellent — very well done!" : (percent >= 50 ? "Good effort — revise the missed words and try again." : "Keep practicing — review meanings and try again soon.");
+  document.getElementById('finalMessage').textContent = msg;
+  // store a printable report payload
+  window.__vocab_quiz_report = {student:{
+    name: document.getElementById('st-name').value,
+    class: document.getElementById('st-class').value,
+    section: document.getElementById('st-section').value,
+    roll: document.getElementById('st-roll').value
+  }, total, correctCount, percent, timestamp: new Date().toISOString(), results};
+}
+
+/* reset everything */
+function resetAll(){
+  if(!confirm('Clear student info and reset the quiz?')) return;
+  document.getElementById('st-name').value='';
+  document.getElementById('st-class').value='';
+  document.getElementById('st-section').value='';
+  document.getElementById('st-roll').value='';
+  document.getElementById('startBtn').disabled=false;
+  quizArea.classList.add('hidden');
+  summary.classList.add('hidden');
+  index = 0; correctCount = 0; started=false; results.length=0;
+  updateMeta();
+}
+
+/* Print / open report (basic HTML) */
+function downloadResults(){
+  const rpt = window.__vocab_quiz_report;
+  if(!rpt){ alert('No results found. Complete the quiz first.'); return; }
+  // build rows list
+  let rows = '';
+  for(let i=0;i<total;i++){
+    const r = RIDDLES[i];
+    const res = rpt.results[i] || {student:'(no answer)', isCorrect:false};
+    const mark = res.isCorrect ? '1' : '0';
+    const resultLabel = res.isCorrect ? 'Correct' : 'Incorrect';
+    rows += `<tr>
+      <td style="padding:6px;border:1px solid #ddd">${i+1}</td>
+      <td style="padding:6px;border:1px solid #ddd"><strong>${escapeHtml(r.r)}</strong><div style="color:#555;margin-top:6px">${escapeHtml(r.d)}</div></td>
+      <td style="padding:6px;border:1px solid #ddd">${escapeHtml(res.student || '')}</td>
+      <td style="padding:6px;border:1px solid #ddd">${escapeHtml(r.a)}</td>
+      <td style="padding:6px;border:1px solid #ddd">${mark}</td>
+      <td style="padding:6px;border:1px solid #ddd">${resultLabel}</td>
+    </tr>`;
+  }
+
+  const html = `
+  <html>
+    <head><meta charset="utf-8"><title>Vocabulary Riddle Report</title>
+    <style>body{font-family:Arial,Helvetica,sans-serif;color:#222;padding:18px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccc;padding:8px;text-align:left}th{background:#f4f4f4}</style>
+    </head>
+    <body>
+      <h2>Vocabulary Riddle Quiz Report</h2>
+      <div><strong>Name:</strong> ${escapeHtml(rpt.student.name)} — <strong>Class:</strong> ${escapeHtml(rpt.student.class)} — <strong>Section:</strong> ${escapeHtml(rpt.student.section)} — <strong>Roll:</strong> ${escapeHtml(rpt.student.roll)}</div>
+      <div style="margin-top:8px"><strong>Score:</strong> ${rpt.correctCount} / ${rpt.total} (${rpt.percent}%)</div>
+      <table style="margin-top:12px"><thead><tr><th>#</th><th>Riddle & Definition</th><th>Student answer</th><th>Correct answer</th><th>Mark</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table>
+      <p style="margin-top:16px;color:#555">Generated: ${new Date(rpt.timestamp).toLocaleString()}</p>
+    </body>
+  </html>`;
+
+  const w = window.open('', '_blank');
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>{ try{ w.focus(); w.print(); } catch(e){ alert('A new tab opened with the report. Use its Print → Save as PDF to download.'); } },400);
+}
+
+/* small helper escape for HTML */
+function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+</script>
+</body>
+</html>
